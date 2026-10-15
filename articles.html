@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Articles · Spirit Champions HQ</title>
+<meta name="description" content="Session write-ups, book reviews and photographs from the Spirit Champions Book Reading Club at HQ.">
+<link rel="icon" href="/assets/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Public+Sans:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/assets/style.css">
+<link rel="stylesheet" href="/assets/articles/style.css">
+</head>
+<body>
+<header class="mast">
+  <div class="wrap">
+    <div class="plate"><img src="/assets/logo.png" alt="Spirit Champions logo"></div>
+    <div class="grow">
+      <p class="eyebrow">Spirit Champions Book Reading Club · HQ Club</p>
+      <h1>Articles</h1>
+      <p class="sub">The session write-ups and book reviews of the first Spirit Champions Book Reading Club. Every week of reading ends in a record of what was discussed, kept here for the club and for the centres that follow.</p>
+    </div>
+  </div>
+</header>
+
+<div class="strip">
+  <div class="wrap">
+    <span class="note"><span id="count">1 article</span> · kept by the HQ team</span>
+    <span class="actions"><a class="lnk" href="/">Team chart</a><a class="lnk" href="/programme">Session 1 programme</a><a class="lnk" href="/register">Sign the register</a></span>
+  </div>
+</div>
+
+<main>
+  <div class="wrap page">
+    <section aria-labelledby="pub-h">
+      <div class="sec-head"><h2 id="pub-h">Published articles</h2><span class="eyebrow">Session 1 · Book review</span></div>
+      <p class="hub-lead">The review session on Chapters 4 and 6 of <i>Restoring Africa’s Spiritual Identity</i> was written up by one of the readers, with the review cards and photographs of the day.</p>
+
+      <div class="art-list">
+        <article class="art-item">
+          <div class="thumb">
+            <img src="/assets/articles/reclaiming-africas-spiritual-identity/card.jpg" alt="The Spirit Champions Book Reading Club in session at the MSRI classroom" width="640" height="800">
+          </div>
+          <div class="txt">
+            <p class="eyebrow">Book review · Chapters 4 and 6</p>
+            <h2><a href="/articles/reclaiming-africas-spiritual-identity">Reclaiming Africa’s Spiritual Identity: Rebuilding the Institutions History Destroyed</a></h2>
+            <p class="stand">The Spirit Champions Book Reading Club explores how the destruction of African spiritual institutions disrupted indigenous knowledge and why restoring them matters today.</p>
+            <p class="meta">By <b>Ayabonga Mayisela</b> · Thursday <b>15 October 2027 (ASC)</b> · MSRI classroom</p>
+            <a class="btn" href="/articles/reclaiming-africas-spiritual-identity">Read the article</a>
+          </div>
+        </article>
+      </div>
+
+      <p class="hub-note">Articles are published here once HSRM has approved them, with the session photographs readers have consented to. A new article follows each week of the programme, so this page grows with the club.</p>
+    </section>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Presented for the guidance of <b>HSRM Imboni Dr uZwi-Lezwe Radebe</b></span>
+    <span>Prepared by <b>Sam Langa</b>, Programme Lead</span>
+  </div>
+</footer>
+
+<script>
+/* The count in the strip follows the list, so the page stays right when an article is added. */
+(function () {
+  const n = document.querySelectorAll(".art-list .art-item").length;
+  const el = document.getElementById("count");
+  if (el) el.textContent = n + (n === 1 ? " article" : " articles");
+})();
+</script>
+</body>
+</html>
