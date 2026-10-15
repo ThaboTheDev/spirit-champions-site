@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Team Sign In · Spirit Champions HQ</title>
+<link rel="icon" href="/assets/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Public+Sans:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+<header class="mast slim">
+  <div class="wrap">
+    <div class="plate"><img src="/assets/logo.png" alt="Spirit Champions logo"></div>
+    <div class="grow">
+      <p class="eyebrow">Spirit Champions Book Reading Club · HQ Club</p>
+      <h1>Manage the HQ team</h1>
+    </div>
+    <a class="signin" href="/">View chart</a>
+  </div>
+</header>
+
+<div class="strip" id="bar" hidden>
+  <div class="wrap">
+    <div class="tabs" role="tablist" aria-label="Admin sections">
+      <button class="tab" role="tab" id="tab-members" aria-selected="true" aria-controls="view-members">Members</button>
+      <button class="tab" role="tab" id="tab-register" aria-selected="false" aria-controls="view-register">Register</button>
+      <button class="tab" role="tab" id="tab-access" aria-selected="false" aria-controls="view-access" hidden>Team access</button>
+    </div>
+    <span class="note"><span id="who"></span> · <button class="lnk" id="signout" type="button">Sign out</button></span>
+  </div>
+</div>
+
+<main>
+  <div class="wrap page">
+
+    <!-- Signed out -->
+    <section class="auth" id="view-auth" hidden>
+      <div class="tabs" role="tablist" aria-label="Sign in options">
+        <button class="tab" role="tab" id="tab-login" aria-selected="true" aria-controls="form-login">Sign in</button>
+        <button class="tab" role="tab" id="tab-join" aria-selected="false" aria-controls="form-join">First time or new code</button>
+      </div>
+      <form class="panel-f" id="form-login" novalidate style="margin-top:16px">
+        <h2>Sign in</h2>
+        <div class="field"><label for="l-email">Email</label><input type="email" id="l-email" autocomplete="email" required></div>
+        <div class="field"><label for="l-pass">Password</label><input type="password" id="l-pass" autocomplete="current-password" required></div>
+        <div class="actions"><button class="btn" type="submit" id="l-go">Sign in</button></div>
+        <p class="msg" id="l-msg" role="status" aria-live="polite"></p>
+        <p class="hint">Forgot your password? Ask Sam for a new join code, then use "First time or new code".</p>
+      </form>
+      <form class="panel-f" id="form-join" novalidate style="margin-top:16px" hidden>
+        <h2>Set your password</h2>
+        <p class="hint">Use the 6-digit join code Sam sent you. Codes work for 7 days.</p>
+        <div class="field"><label for="j-email">Email</label><input type="email" id="j-email" autocomplete="email" required></div>
+        <div class="field"><label for="j-code">Join code</label><input type="text" id="j-code" inputmode="numeric" autocomplete="one-time-code" maxlength="7" required></div>
+        <div class="field"><label for="j-pass">New password</label><input type="password" id="j-pass" autocomplete="new-password" minlength="8" required><span class="hint">At least 8 characters.</span></div>
+        <div class="field"><label for="j-pass2">Repeat password</label><input type="password" id="j-pass2" autocomplete="new-password" required></div>
+        <div class="actions"><button class="btn" type="submit" id="j-go">Set password and sign in</button></div>
+        <p class="msg" id="j-msg" role="status" aria-live="polite"></p>
+      </form>
+    </section>
+
+    <!-- Signed in, not on the team -->
+    <section class="auth" id="view-denied" hidden>
+      <div class="panel-f">
+        <h2>Not on the team list yet</h2>
+        <p>You're signed in as <b id="denied-email"></b>, but this email isn't on the HQ team list. Ask Sam to add it and send you a join code.</p>
+        <div class="actions"><button class="btn ghost" type="button" id="denied-out">Sign out</button></div>
+      </div>
+    </section>
+
+    <!-- Members -->
+    <div id="view-members" role="tabpanel" aria-labelledby="tab-members" hidden>
+      <div class="admin">
+        <form class="panel-f" id="form" novalidate>
+          <h2 id="form-h">Add a member</h2>
+          <div class="field">
+            <label for="f-photo">Photo</label>
+            <div class="photo-pick">
+              <div class="ph empty" id="f-prev"></div>
+              <div class="acts">
+                <span class="btn ghost file">Choose photo<input type="file" id="f-photo" accept="image/jpeg,image/png,image/webp"></span>
+                <button type="button" class="lnk" id="f-photo-clear" hidden>Remove photo</button>
+                <span class="hint">JPG, PNG or WebP. A head-and-shoulders picture works best.</span>
+              </div>
+            </div>
+          </div>
+          <div class="field"><label for="f-name">Full name</label><input type="text" id="f-name" maxlength="80" autocomplete="off" required></div>
+          <div class="field"><label for="f-role">Role in the club</label><input type="text" id="f-role" maxlength="80" autocomplete="off" placeholder="For example: Review Editor"></div>
+          <div class="row2">
+            <div class="field"><label for="f-group">Section</label><select id="f-group"><option value="team">Core team</option><option value="lead">Programme Lead</option></select></div>
+            <div class="field"><label for="f-order">Position</label><input type="number" id="f-order" min="1" max="999" step="1"></div>
+          </div>
+          <div class="field">
+            <label for="f-bio">Brief profile</label>
+            <textarea id="f-bio" maxlength="700" placeholder="Two or three sentences: background, studies or work, and what they bring to the club."></textarea>
+            <span class="hint" id="f-bio-n">0 of 700 characters</span>
+          </div>
+          <div class="actions">
+            <button type="submit" class="btn" id="f-save">Add member</button>
+            <button type="button" class="btn ghost" id="f-cancel" hidden>Cancel editing</button>
+          </div>
+          <p class="msg" id="f-msg" role="status" aria-live="polite"></p>
+        </form>
+        <section aria-labelledby="list-h">
+          <div class="sec-head"><h2 id="list-h">Members</h2><span class="eyebrow" id="list-n"></span></div>
+          <div class="list" id="list"></div>
+        </section>
+      </div>
+    </div>
+
+    <!-- Register -->
+    <div id="view-register" role="tabpanel" aria-labelledby="tab-register" hidden>
+      <div class="sec-head">
+        <h2>Session register</h2>
+        <div class="actions">
+          <label class="check" for="g-date">Session <select id="g-date" style="width:auto"></select></label>
+          <button class="btn ghost" type="button" id="g-refresh">Refresh</button>
+          <button class="btn" type="button" id="g-csv">Download CSV</button>
+        </div>
+      </div>
+      <p class="hint" style="margin-top:10px">Readers sign at <a href="/register">/register</a> (QR code on the <a href="/programme">programme page</a>). For readers without phones, print the <a href="/print-register" target="_blank" rel="noopener">paper register</a>.</p>
+      <p class="msg" id="g-msg" role="status" aria-live="polite"></p>
+      <div class="tbl" style="overflow-x:auto;margin-top:8px;border:1px solid var(--line);border-radius:12px;background:var(--card)">
+        <table id="g-table" style="border-collapse:collapse;width:100%;min-width:760px;font-size:14px"></table>
+      </div>
+      <div class="sec-head" style="margin-top:32px"><h2>What readers will carry into the week</h2><span class="eyebrow" id="k-n"></span></div>
+      <div class="list" id="k-list"></div>
+    </div>
+
+    <!-- Team access (admins) -->
+    <div id="view-access" role="tabpanel" aria-labelledby="tab-access" hidden>
+      <div class="admin">
+        <form class="panel-f" id="form-access" novalidate>
+          <h2>Add someone to the team</h2>
+          <p class="hint">Add their email, then create a join code and send it to them on WhatsApp. They use it once to set their own password.</p>
+          <div class="field"><label for="a-email">Email</label><input type="email" id="a-email" autocomplete="off" required></div>
+          <label class="check"><input type="checkbox" id="a-admin"> Can also manage team access (admin)</label>
+          <div class="actions"><button class="btn" type="submit" id="a-go">Add to team</button></div>
+          <p class="msg" id="a-msg" role="status" aria-live="polite"></p>
+        </form>
+        <section aria-labelledby="acc-h">
+          <div class="sec-head"><h2 id="acc-h">Who can sign in</h2><span class="eyebrow" id="acc-n"></span></div>
+          <div class="list" id="acc-list"></div>
+        </section>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Spirit Champions Book Reading Club · HQ</span>
+    <span>Prepared by <b>Sam Langa</b>, Programme Lead</span>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<script src="/assets/common.js"></script>
+<script src="/assets/admin.js"></script>
+</body>
+</html>

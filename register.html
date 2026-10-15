@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Session Register · Spirit Champions HQ</title>
+<link rel="icon" href="/assets/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Public+Sans:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+<header class="mast slim">
+  <div class="wrap">
+    <div class="plate"><img src="/assets/logo.png" alt="Spirit Champions logo"></div>
+    <div class="grow">
+      <p class="eyebrow">Spirit Champions Book Reading Club · HQ Club</p>
+      <h1>Session register</h1>
+    </div>
+    <a class="signin" href="/programme">Programme</a>
+  </div>
+</header>
+
+<main>
+  <div class="wrap page">
+    <section class="auth">
+      <div class="tabs" role="tablist" aria-label="Register">
+        <button class="tab" role="tab" id="tab-in" aria-selected="true" aria-controls="form-in">Arriving</button>
+        <button class="tab" role="tab" id="tab-out" aria-selected="false" aria-controls="form-out">Before you leave</button>
+      </div>
+
+      <form class="panel-f" id="form-in" novalidate style="margin-top:16px">
+        <h2>Sign the register</h2>
+        <p class="hint" id="today"></p>
+        <div class="field"><label for="r-name">Full name</label><input type="text" id="r-name" maxlength="80" autocomplete="name" required></div>
+        <div class="field"><label for="r-phone">Phone number</label><input type="text" id="r-phone" inputmode="tel" maxlength="20" autocomplete="tel" placeholder="For the club's WhatsApp group"></div>
+        <div class="field"><label for="r-email">Email (optional)</label><input type="email" id="r-email" maxlength="120" autocomplete="email"></div>
+        <div class="field"><label for="r-centre">Spiritual centre</label><input type="text" id="r-centre" maxlength="80" placeholder="For example: HQ"></div>
+        <div class="field"><label for="r-inst">University or SCSS chapter (if a student)</label><input type="text" id="r-inst" maxlength="120"></div>
+        <div class="field">
+          <label for="r-first">Is this your first session?</label>
+          <select id="r-first"><option value="">Choose</option><option value="yes">Yes, my first session</option><option value="no">No, I have attended before</option></select>
+        </div>
+        <label class="check" style="align-items:flex-start"><input type="checkbox" id="r-consent" style="margin-top:4px"> <span>I agree to be filmed and photographed during this session. The recording and photos may be used in the club's published reviews on the Spirit Champions pages once HSRM has approved them.</span></label>
+        <p class="hint">If you prefer not to appear on camera, leave this unticked and tell the Convenor, who will seat you out of the camera's view.</p>
+        <div class="actions"><button class="btn" type="submit" id="r-go">Sign the register</button></div>
+        <p class="msg" id="r-msg" role="status" aria-live="polite"></p>
+        <p class="hint">Your details are kept by the Spirit Champions HQ team for the club's attendance records and are not shared outside the institution.</p>
+      </form>
+
+      <form class="panel-f" id="form-out" novalidate style="margin-top:16px" hidden>
+        <h2>One thing to carry into the week</h2>
+        <p class="hint">Write the one thing from today's session you will carry into this week.</p>
+        <div class="field"><label for="t-name">Full name</label><input type="text" id="t-name" maxlength="80" autocomplete="name" required></div>
+        <div class="field"><label for="t-phone">Phone number</label><input type="text" id="t-phone" inputmode="tel" maxlength="20" autocomplete="tel"></div>
+        <div class="field"><label for="t-text">What I will carry into this week</label><textarea id="t-text" maxlength="500" required></textarea></div>
+        <div class="actions"><button class="btn" type="submit" id="t-go">Save</button></div>
+        <p class="msg" id="t-msg" role="status" aria-live="polite"></p>
+      </form>
+    </section>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Spirit Champions Book Reading Club · HQ · MSRI classroom</span>
+    <span>Thursdays, 10:00 to 11:30</span>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<script src="/assets/common.js"></script>
+<script>
+(function () {
+  const $ = id => document.getElementById(id);
+  const { client } = SC;
+  $("today").textContent = new Date().toLocaleDateString("en-ZA", { weekday: "long", day: "numeric", month: "long", timeZone: "Africa/Johannesburg" }) + " · MSRI classroom";
+  function tab(which) {
+    const inn = which === "in";
+    $("tab-in").setAttribute("aria-selected", String(inn)); $("tab-out").setAttribute("aria-selected", String(!inn));
+    $("form-in").hidden = !inn; $("form-out").hidden = inn;
+  }
+  $("tab-in").addEventListener("click", () => tab("in"));
+  $("tab-out").addEventListener("click", () => tab("out"));
+  if (location.hash === "#leave") tab("out");
+  function msg(id, t, k) { const e = $(id); e.textContent = t || ""; e.className = "msg" + (k ? " " + k : ""); }
+  const v = id => $(id).value.trim();
+
+  $("form-in").addEventListener("submit", async e => {
+    e.preventDefault();
+    const name = v("r-name");
+    if (name.length < 2) { msg("r-msg", "Please enter your full name.", "err"); $("r-name").focus(); return; }
+    const first = $("r-first").value;
+    const row = { full_name: name, phone: v("r-phone") || null, email: v("r-email") || null, spiritual_centre: v("r-centre") || null,
+      institution: v("r-inst") || null, first_time: first === "" ? null : first === "yes", consent_media: $("r-consent").checked };
+    $("r-go").disabled = true; msg("r-msg", "Saving…");
+    const { error } = await client.from("sc_attendance").insert(row);
+    $("r-go").disabled = false;
+    if (error) { msg("r-msg", "That didn't save. Check your connection and try again.", "err"); return; }
+    $("t-name").value = name; $("t-phone").value = row.phone || "";
+    $("form-in").reset();
+    msg("r-msg", "Thank you, " + name.split(" ")[0] + ". You're signed in. At the end of the session, open this page again and choose \"Before you leave\".", "ok");
+  });
+
+  $("form-out").addEventListener("submit", async e => {
+    e.preventDefault();
+    const name = v("t-name"), text = v("t-text");
+    if (name.length < 2) { msg("t-msg", "Please enter your full name.", "err"); return; }
+    if (text.length < 3) { msg("t-msg", "Please write your takeaway.", "err"); return; }
+    $("t-go").disabled = true; msg("t-msg", "Saving…");
+    const { error } = await client.from("sc_takeaways").insert({ full_name: name, phone: v("t-phone") || null, takeaway: text });
+    $("t-go").disabled = false;
+    if (error) { msg("t-msg", "That didn't save. Check your connection and try again.", "err"); return; }
+    $("t-text").value = "";
+    msg("t-msg", "Saved. Siyabonga, see you next Thursday.", "ok");
+  });
+})();
+</script>
+</body>
+</html>

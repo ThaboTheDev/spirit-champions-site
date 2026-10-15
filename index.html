@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Spirit Champions HQ Team</title>
+<meta name="description" content="The HQ team of the Spirit Champions Book Reading Club.">
+<link rel="icon" href="/assets/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Public+Sans:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+<header class="mast">
+  <div class="wrap">
+    <div class="plate"><img src="/assets/logo.png" alt="Spirit Champions logo"></div>
+    <div class="grow">
+      <p class="eyebrow">Spirit Champions Book Reading Club · HQ Club</p>
+      <h1>The HQ Team</h1>
+      <p class="sub">The members who run the first Spirit Champions Book Reading Club at HQ. Every spiritual centre's club will follow from this one.</p>
+      <div class="facts">
+        <span>Pilot session: <b>Thursday 15 October 2027 (ASC)</b></span>
+        <span>Time: <b>10:00 to 11:30</b></span>
+        <span>Venue: <b>MSRI classroom</b></span>
+        <span>Reading: <b>Restoring Africa's Spiritual Identity, Chapters 4 and 6</b></span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="strip">
+  <div class="wrap">
+    <span class="note" id="count">Loading the team…</span>
+    <span class="actions"><a class="lnk" href="/programme">Session 1 programme</a><a class="lnk" href="/register">Sign the register</a><a class="lnk" href="/admin">Team sign in</a></span>
+  </div>
+</div>
+
+<main>
+  <div class="wrap page">
+    <section aria-labelledby="lead-h">
+      <div class="sec-head"><h2 id="lead-h">Programme Lead</h2><span class="eyebrow">Reports to HSRM</span></div>
+      <div class="leads" id="leads"><div class="state">Loading…</div></div>
+    </section>
+    <section aria-labelledby="team-h">
+      <div class="sec-head"><h2 id="team-h">Core team</h2><span class="eyebrow" id="team-n"></span></div>
+      <div class="grid" id="grid"></div>
+    </section>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Presented for the guidance of <b>HSRM Imboni Dr uZwi-Lezwe Radebe</b></span>
+    <span>Prepared by <b>Sam Langa</b>, Programme Lead</span>
+  </div>
+</footer>
+
+<div class="overlay" id="overlay" hidden>
+  <div class="panel" role="dialog" aria-modal="true" aria-labelledby="p-name">
+    <div class="ph" id="p-ph"></div>
+    <div class="body">
+      <button class="close" id="p-close" aria-label="Close profile">×</button>
+      <p class="role" id="p-role"></p>
+      <h3 id="p-name"></h3>
+      <p class="bio" id="p-bio"></p>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<script src="/assets/common.js"></script>
+<script>
+(async function () {
+  const $ = id => document.getElementById(id);
+  const { client, photoBox, txt, openProfile } = SC;
+  const { data, error } = await client.from("sc_members").select("id,name,role,bio,grp,position,photo_url").order("position").order("name");
+  if (error) {
+    $("count").textContent = "The team couldn't load.";
+    $("leads").replaceChildren(Object.assign(document.createElement("div"), { className: "state", textContent: "The team couldn't load. Please refresh the page." }));
+    return;
+  }
+  const leads = data.filter(m => m.grp === "lead"), team = data.filter(m => m.grp !== "lead");
+  const L = $("leads"); L.textContent = "";
+  if (!leads.length) L.appendChild(Object.assign(document.createElement("div"), { className: "state", textContent: "No Programme Lead added yet." }));
+  leads.forEach(m => {
+    const c = document.createElement("div"); c.className = "lead";
+    c.appendChild(photoBox(m));
+    const t = document.createElement("div");
+    t.appendChild(txt("h3", "", m.name, "Name to be added"));
+    t.appendChild(txt("p", "role", m.role, "Role to be added"));
+    t.appendChild(txt("p", "bio", m.bio, "Profile to be added."));
+    const b = document.createElement("button"); b.className = "btn"; b.type = "button"; b.textContent = "Read profile";
+    b.addEventListener("click", () => openProfile(m, b)); t.appendChild(b);
+    c.appendChild(t); L.appendChild(c);
+  });
+  const G = $("grid");
+  team.forEach(m => {
+    const b = document.createElement("button"); b.className = "card"; b.type = "button";
+    b.appendChild(photoBox(m));
+    const t = document.createElement("div"); t.className = "txt";
+    t.appendChild(txt("h3", "", m.name, "Name to be added"));
+    t.appendChild(txt("p", "role", m.role, "Role to be added"));
+    t.appendChild(txt("p", "bio", m.bio, "Profile to be added."));
+    b.appendChild(t); b.addEventListener("click", () => openProfile(m, b)); G.appendChild(b);
+  });
+  if (!team.length) G.appendChild(Object.assign(document.createElement("div"), { className: "state", textContent: "No team members added yet." }));
+  $("team-n").textContent = team.length ? team.length + (team.length === 1 ? " member" : " members") : "";
+  const withPhoto = data.filter(m => m.photo_url).length;
+  $("count").textContent = data.length + " members · " + withPhoto + " with photos";
+})();
+</script>
+</body>
+</html>
