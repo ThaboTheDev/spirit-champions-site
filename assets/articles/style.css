@@ -1,0 +1,104 @@
+/* Spirit Champions HQ · articles. Shared by /articles and every article page.
+   Built on assets/style.css; nothing here is needed by the other pages. */
+
+/* ---------- Articles landing page ---------- */
+.hub-lead{font-size:18px;line-height:1.6;max-width:70ch;margin-top:14px}
+.art-list{display:flex;flex-direction:column;gap:28px;margin-top:22px}
+.art-item{display:grid;grid-template-columns:280px minmax(0,1fr);background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.art-item .thumb{aspect-ratio:4/5;background:var(--sand);overflow:hidden}
+.art-item .thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.art-item .txt{padding:30px 32px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.art-item .eyebrow{color:var(--gold-dk)}
+.art-item h2{font-size:clamp(21px,2.4vw,27px);line-height:1.25;margin-top:2px}
+.art-item h2 a{text-decoration:none}
+.art-item h2 a:hover{text-decoration:underline;text-underline-offset:4px}
+.art-item .stand{font-size:15.5px;line-height:1.6;max-width:64ch}
+.art-item .meta{font-size:13px;color:var(--muted)}
+.art-item .meta b{color:var(--ink);font-weight:600}
+.art-item .btn{align-self:flex-start;margin-top:8px}
+.hub-note{font-size:14px;color:var(--muted);border-top:1px solid var(--line);padding-top:18px;margin-top:34px;max-width:70ch}
+
+/* ---------- Article page ---------- */
+.mast .mast-link{font-family:var(--serif);font-size:22px;line-height:1.2;margin-top:4px}
+.mast .mast-link a{color:var(--ivory);text-decoration:none}
+.mast .mast-link a:hover{text-decoration:underline;text-underline-offset:4px}
+.art-hero{position:relative;background:var(--navy);color:var(--ivory);isolation:isolate}
+.art-hero .bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 44%;z-index:-2}
+.art-hero::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(3,15,57,.60),rgba(3,15,57,.76) 58%,rgba(3,15,57,.95))}
+.art-hero .wrap{padding-block:58px 48px}
+.art-hero .inner{max-width:860px}
+.art-hero .eyebrow{color:var(--gold)}
+.art-hero h1{color:#fff;font-size:clamp(29px,4.4vw,44px);line-height:1.18;margin-top:14px}
+.art-hero .stand{color:var(--cream);font-size:clamp(17px,1.9vw,20px);line-height:1.6;margin-top:18px;max-width:64ch}
+.art-hero .byline{margin-top:24px;font-size:14px;color:var(--cream);display:flex;flex-wrap:wrap;gap:6px 20px}
+.art-hero .byline b{color:var(--ivory);font-weight:600}
+
+.crumbs{background:var(--sand);border-bottom:1px solid var(--line)}
+.crumbs .wrap{padding-block:11px;display:flex;flex-wrap:wrap;gap:6px 20px;font-size:13.5px;color:var(--muted)}
+.crumbs a{font-weight:600}
+
+.art-wrap{display:grid;grid-template-columns:minmax(0,1fr) 280px;gap:52px;padding-block:42px 66px;align-items:start}
+.art-main{grid-column:1;grid-row:1;display:flex;flex-direction:column;gap:42px;min-width:0}
+.art-aside{grid-column:2;grid-row:1;display:flex;flex-direction:column;gap:22px;position:sticky;top:18px}
+.art-main section{scroll-margin-top:20px}
+.art-main h2{font-size:clamp(22px,2.6vw,28px);line-height:1.25}
+.art-main h2+p,.art-main h2+.figure{margin-top:18px}
+.art-main p{font-size:17px;line-height:1.75}
+.art-main p+p{margin-top:16px}
+.art-lede p{font-size:18.5px;line-height:1.7}
+.art-lede p:first-child::first-letter{float:left;font-family:var(--serif);font-size:62px;line-height:.82;padding:8px 12px 0 0;color:var(--navy)}
+
+.figure{margin:22px 0 0}
+.figure a{display:block}
+.figure img{display:block;width:100%;height:auto;background:#fff;border:1px solid var(--line);border-radius:12px}
+.figure figcaption{font-size:13px;line-height:1.5;color:var(--muted);margin-top:10px;max-width:74ch}
+.figure figcaption b{color:var(--ink);font-weight:600}
+.figure figcaption .full{display:block;font-weight:600;margin-top:2px}
+.narrow{max-width:640px;margin-inline:auto}
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+blockquote+p{margin-top:18px}
+
+blockquote{margin:20px 0 0;padding:2px 0 4px 20px;border-left:3px solid var(--gold);font-family:var(--serif);font-style:italic;font-size:18px;line-height:1.6;color:var(--ink);break-inside:avoid;orphans:2;widows:2}
+blockquote cite{display:block;margin-top:10px;font:600 12.5px var(--sans);font-style:normal;letter-spacing:.08em;text-transform:uppercase;color:var(--gold-dk)}
+.art-main .book{margin-top:16px}
+
+.idx{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 22px}
+.idx .eyebrow{color:var(--gold-dk)}
+.idx ol{list-style:none;margin:12px 0 0;padding:0;display:flex;flex-direction:column;gap:10px}
+.idx a{font-size:14.5px;font-weight:600;text-decoration:none;color:var(--ink)}
+.idx a:hover{text-decoration:underline;text-underline-offset:3px}
+.facts-card{background:var(--navy);color:var(--cream);border-radius:14px;padding:20px 22px;font-size:13.5px;line-height:1.6;display:flex;flex-direction:column;gap:8px}
+.facts-card .eyebrow{color:var(--gold)}
+.facts-card b{color:var(--ivory);font-weight:600}
+
+.art-end{display:flex;flex-wrap:wrap;gap:14px 18px;align-items:center;border-top:1px solid var(--line);padding-top:22px}
+
+/* Below the two-column width the article keeps only the session card, and it
+   moves above the text: a contents list at the foot of the page is no use. */
+@media (max-width:1040px){
+  .art-wrap{display:flex;flex-direction:column;gap:26px}
+  .art-aside{order:-1;position:static}
+  .idx{display:none}
+}
+@media (max-width:860px){
+  .art-item{grid-template-columns:1fr}
+  .art-item .thumb{aspect-ratio:16/10}
+  .art-item .txt{padding:22px 20px}
+}
+@media (max-width:620px){
+  .art-main p{font-size:16.5px}
+  .art-lede p{font-size:17.5px}
+  .art-hero .wrap{padding-block:40px 34px}
+  .art-wrap{padding-block:30px 52px}
+  .duo{grid-template-columns:1fr;gap:14px}
+  blockquote{font-size:17px}
+  .narrow{max-width:none}
+}
+@media print{
+  .art-hero{background:none;color:#000}
+  .art-hero .bg,.art-hero::before{display:none}
+  .art-hero h1,.art-hero .stand,.art-hero .byline,.art-hero .byline b{color:#000}
+  .crumbs,.art-aside,.mast,.strip,.art-end{display:none}
+  .art-wrap{grid-template-columns:1fr;padding-block:0;gap:24px}
+  .figure,.art-item{break-inside:avoid}
+}
